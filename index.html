@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>T&T Rewards Card Maintenance (Canada)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #f9f9f9;
+    }
+    .container {
+      background: #fff;
+      padding: 20px;
+      border: 1px solid #ccc;
+      max-width: 700px;
+      position: relative;
+    }
+    h2 {
+      margin-bottom: 20px;
+    }
+    .form-row {
+      margin-bottom: 15px;
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      align-items: center;
+      gap: 5px;
+    }
+    label {
+      font-weight: normal;
+    }
+    input[type="text"], select {
+      padding: 5px;
+    }
+
+    /* FIELD WIDTHS */
+    .long-input {
+      width: 20ch;
+    }
+    .name-input {
+      width: 30ch;
+    }
+    .phone-input {
+      width: 20ch;
+    }
+    .postal-input {
+      width: 6ch;
+    }
+    .short-input {
+      width: 10ch;
+    }
+    .email-user {
+      width: 18ch;
+    }
+    .email-domain {
+      width: 10ch;
+    }
+    .email-tld {
+      width: 5ch;
+    }
+
+    .grouped-inputs {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
+
+    .language-options {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 5px 5px;
+    }
+
+    .top-buttons {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+    .top-buttons button {
+      padding: 6px 16px;
+      margin-left: 10px;
+    }
+
+    .required::after {
+      content: "*";
+      color: red;
+      margin-left: 4px;
+    }
+
+.layout-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 40px;
+}
+
+.container {
+  flex: 2; /* Make the form larger */
+}
+
+.image-box {
+  flex: 1; /* Make the image column smaller */
+}
+
+.image-box img {
+  max-width: 100%;
+  max-height: 615px; /* 👈 Adjust as needed */	
+  height: auto;
+  display: block;
+  border: 1px solid #ccc;
+}
+  </style>
+</head>
+<body>
+
+<div class="layout-container">
+  <div class="container">
+  <div class="top-buttons">
+    <button type="button" onclick="validateForm()">Save</button>
+    <button type="button" onclick="confirmDelete()">Delete</button>
+  </div>
+
+  <h2>T&T Rewards Card Maintenance (Canada)</h2>
+
+  <form id="ttForm">
+    <div class="form-row">
+      <label class="required">Card No.:</label>
+      <div class="grouped-inputs">
+        <input type="text" name="card_prefix" maxlength="5" placeholder="e.g. 40102" class="short-input" required>
+        <input type="text" name="card_number" maxlength="8" placeholder="Member number" class="long-input" required>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label class="required">First Name:</label>
+      <input type="text" name="first_name" placeholder="e.g. Chris" class="name-input" required>
+    </div>
+
+    <div class="form-row">
+      <label class="required">Last Name:</label>
+      <input type="text" name="last_name" placeholder="e.g. Leung" class="name-input" required>
+    </div>
+
+    <div class="form-row">
+      <label class="required">Email:</label>
+      <div class="grouped-inputs">
+        <input type="text" name="email_prefix" placeholder="e.g. chris.leung" class="email-user" required> @
+        <input type="text" name="email_domain" placeholder="e.g. gmail" class="email-domain" required> .
+        <input type="text" name="email_tld" placeholder="com" class="email-tld" required>
+      </div>
+    </div>
+
+<div class="form-row">
+  <label class="required">Subscribe E-newsletter:</label>
+  <div class="grouped-inputs">
+    <label><input type="radio" name="subscribe_newsletter" value="yes" required> Yes</label>
+    <label><input type="radio" name="subscribe_newsletter" value="no" required> No</label>
+  </div>
+</div>
+
+    <div class="form-row">
+      <label class="required">Phone:</label>
+      <input type="text" name="phone" maxlength="10" placeholder="e.g. 999-999-9999" class="phone-input" required>
+    </div>
+
+    <div class="form-row">
+      <label class="required">Postal Code:</label>
+      <div class="grouped-inputs">
+        <input type="text" name="postal1" maxlength="3" placeholder="A9A" class="postal-input" required>
+        <input type="text" name="postal2" maxlength="3" placeholder="9A9" class="postal-input" required>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label>Language:</label>
+      <div class="language-options">
+        <label><input type="checkbox" name="language" value="EN" onclick="enforceSingleCheckbox(this)"> English</label>
+        <label><input type="checkbox" name="language" value="TC" onclick="enforceSingleCheckbox(this)"> Traditional Chinese</label>
+        <label><input type="checkbox" name="language" value="SC" onclick="enforceSingleCheckbox(this)"> Simplified Chinese</label>
+        <label><input type="checkbox" name="language" value="FR" onclick="enforceSingleCheckbox(this)"> French</label>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label>Date of Birth:</label>
+      <div class="grouped-inputs">
+        <input type="text" name="birth_month" maxlength="2" placeholder="MM" class="postal-input">
+        <input type="text" name="birth_year" maxlength="4" placeholder="YYYY" class="short-input">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label class="required">Form Submission Date:</label>
+      <div class="grouped-inputs">
+        <input type="text" name="sub_month" maxlength="2" placeholder="MM" class="postal-input" required>
+        <input type="text" name="sub_day" maxlength="2" placeholder="DD" class="postal-input" required>
+        <input type="text" name="sub_year" maxlength="4" placeholder="YYYY" class="short-input" required>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label class="required">Customer Signed:</label>
+      <div>
+        <label><input type="checkbox" name="customer_signed" required></label>
+      </div>
+    </div>
+  </form>
+</div> <!-- Close .container -->
+
+  <div class="image-box">
+    <img src="application_form.jpg" alt="Application Form Example">
+  </div>
+</div> <!-- Close .layout-container -->
+</div>
+
+<script>
+  function validateForm() {
+    const form = document.forms['ttForm'];
+    const requiredFields = ['card_prefix', 'card_number', 'first_name', 'last_name', 'email_prefix', 'email_domain', 'email_tld', 'phone', 'postal1', 'postal2', 'sub_month', 'sub_day', 'sub_year'];
+
+    for (let field of requiredFields) {
+      if (!form[field].value.trim()) {
+        alert("Missing Mandatory Information");
+        return;
+      }
+    }
+
+    if (!form['customer_signed'].checked) {
+      alert("Missing Mandatory Information");
+      return;
+    }
+
+    if (!/^\d{5}$/.test(form['card_prefix'].value) || !/^\d{8}$/.test(form['card_number'].value)) {
+      alert("Card number format is incorrect");
+      return;
+    }
+
+    if (!/^\d{10}$/.test(form['phone'].value)) {
+      alert("Phone number must be 10 digits");
+      return;
+    }
+
+    if (!/^[A-Za-z]\d[A-Za-z]$/.test(form['postal1'].value) || !/^\d[A-Za-z]\d$/.test(form['postal2'].value)) {
+      alert("Postal code format is invalid");
+      return;
+    }
+
+// Date of Birth
+if (form['birth_month'].value) {
+  const mm = parseInt(form['birth_month'].value, 10);
+  if (isNaN(mm) || mm < 1 || mm > 12) {
+    alert("Birth month must be between 1 and 12");
+    return;
+  }
+}
+if (form['birth_year'].value) {
+  const yyyy = parseInt(form['birth_year'].value, 10);
+  if (isNaN(yyyy) || yyyy > 2100 || yyyy < 1900) {
+    alert("Birth year must be between 1900 and 2100");
+    return;
+  }
+}
+
+// Form Submission Date
+const sub_mm = parseInt(form['sub_month'].value, 10);
+const sub_dd = parseInt(form['sub_day'].value, 10);
+const sub_yyyy = parseInt(form['sub_year'].value, 10);
+
+if (
+  isNaN(sub_mm) || sub_mm < 1 || sub_mm > 12 ||
+  isNaN(sub_dd) || sub_dd < 1 || sub_dd > 31 ||
+  isNaN(sub_yyyy) || sub_yyyy > 2100 || sub_yyyy < 1900
+) {
+  alert("Form submission date is invalid. Please check MM, DD, and YYYY fields.");
+  return;
+}
+
+    alert("Record Saved");
+  }
+
+  function confirmDelete() {
+    if (confirm("This account will be permanently deleted. Confirm?")) {
+      alert("Account Deleted");
+    }
+  }
+
+  function enforceSingleCheckbox(clickedCheckbox) {
+    const checkboxes = document.querySelectorAll('input[name="language"]');
+    checkboxes.forEach(checkbox => {
+      if (checkbox !== clickedCheckbox) {
+        checkbox.checked = false;
+      }
+    });
+  }
+</script>
+
+</body>
+</html>
