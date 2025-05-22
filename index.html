@@ -172,12 +172,15 @@
 
     <div class="form-row">
       <label>Language:</label>
-      <div class="language-options">
-        <label><input type="checkbox" name="language" value="EN" onclick="enforceSingleCheckbox(this)"> English</label>
-        <label><input type="checkbox" name="language" value="TC" onclick="enforceSingleCheckbox(this)"> Traditional Chinese</label>
-        <label><input type="checkbox" name="language" value="SC" onclick="enforceSingleCheckbox(this)"> Simplified Chinese</label>
-        <label><input type="checkbox" name="language" value="FR" onclick="enforceSingleCheckbox(this)"> French</label>
-      </div>
+<div class="form-row">
+  <label class="required">Language:</label>
+  <div class="language-options">
+    <label><input type="radio" name="language" value="EN" required> English</label>
+    <label><input type="radio" name="language" value="TC" required> Traditional Chinese</label>
+    <label><input type="radio" name="language" value="SC" required> Simplified Chinese</label>
+    <label><input type="radio" name="language" value="FR" required> French</label>
+  </div>
+</div>
     </div>
 
     <div class="form-row">
