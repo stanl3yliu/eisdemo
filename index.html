@@ -36,13 +36,14 @@
     }
     .form-row {
       margin-bottom: 15px;
-      display: grid;
-      grid-template-columns: 160px 1fr;
-      align-items: start;
-      gap: 5px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      gap: 10px;
     }
-    label {
-      font-weight: normal;
+    .form-row label {
+      width: 160px;
+      flex-shrink: 0;
     }
     input[type="text"], select {
       padding: 5px;
@@ -78,6 +79,7 @@
       display: flex;
       gap: 5px;
       align-items: center;
+      flex-wrap: wrap;
     }
 
     .language-options {
@@ -192,9 +194,7 @@
 
       <div class="form-row">
         <label class="required">Application Form Completed:</label>
-        <div>
-          <label><input type="checkbox" name="customer_signed" required></label>
-        </div>
+        <label><input type="checkbox" name="customer_signed" required></label>
       </div>
     </form>
   </div>
@@ -207,7 +207,12 @@
 <script>
   function validateForm() {
     const form = document.forms['ttForm'];
-    const requiredFields = ['card_prefix', 'card_number', 'first_name', 'last_name', 'email_prefix', 'email_domain', 'email_tld', 'phone', 'postal1', 'postal2', 'sub_month', 'sub_day', 'sub_year'];
+    const requiredFields = [
+      'card_prefix', 'card_number', 'first_name', 'last_name',
+      'email_prefix', 'email_domain', 'email_tld',
+      'phone', 'postal1', 'postal2',
+      'sub_month', 'sub_day', 'sub_year'
+    ];
 
     for (let field of requiredFields) {
       if (!form[field].value.trim()) {
