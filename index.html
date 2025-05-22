@@ -9,41 +9,25 @@
       margin: 40px;
       background-color: #f9f9f9;
     }
-    .layout-container {
-      display: flex;
-      align-items: flex-start;
-      gap: 40px;
-    }
     .container {
       background: #fff;
       padding: 20px;
       border: 1px solid #ccc;
-      flex: 2;
       max-width: 700px;
-    }
-    .image-box {
-      flex: 1;
-    }
-    .image-box img {
-      max-width: 100%;
-      max-height: 615px;
-      height: auto;
-      display: block;
-      border: 1px solid #ccc;
+      position: relative;
     }
     h2 {
       margin-bottom: 20px;
     }
     .form-row {
       margin-bottom: 15px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: flex-start;
-      gap: 10px;
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      align-items: center;
+      gap: 5px;
     }
-    .form-row label {
-      width: 160px;
-      flex-shrink: 0;
+    label {
+      font-weight: normal;
     }
     input[type="text"], select {
       padding: 5px;
@@ -79,13 +63,12 @@
       display: flex;
       gap: 5px;
       align-items: center;
-      flex-wrap: wrap;
     }
 
     .language-options {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 2px 5px;
+      gap: 5px 5px;
     }
 
     .top-buttons {
@@ -103,116 +86,136 @@
       color: red;
       margin-left: 4px;
     }
+
+.layout-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 40px;
+}
+
+.container {
+  flex: 2; /* Make the form larger */
+}
+
+.image-box {
+  flex: 1; /* Make the image column smaller */
+}
+
+.image-box img {
+  max-width: 100%;
+  max-height: 615px; /* 👈 Adjust as needed */	
+  height: auto;
+  display: block;
+  border: 1px solid #ccc;
+}
   </style>
 </head>
 <body>
 
 <div class="layout-container">
   <div class="container">
-    <div class="top-buttons">
-      <button type="button" onclick="validateForm()">Save</button>
-      <button type="button" onclick="confirmDelete()">Delete</button>
+  <div class="top-buttons">
+    <button type="button" onclick="validateForm()">Save</button>
+    <button type="button" onclick="confirmDelete()">Delete</button>
+  </div>
+
+  <h2>T&T Rewards Card Maintenance (Canada)</h2>
+
+  <form id="ttForm">
+    <div class="form-row">
+      <label class="required">Card No.:</label>
+      <div class="grouped-inputs">
+        <input type="text" name="card_prefix" maxlength="5" placeholder="e.g. 40102" class="short-input" required>
+        <input type="text" name="card_number" maxlength="8" placeholder="Member number" class="long-input" required>
+      </div>
     </div>
 
-    <h2>T&T Rewards Card Maintenance (Canada)</h2>
+    <div class="form-row">
+      <label class="required">First Name:</label>
+      <input type="text" name="first_name" placeholder="e.g. Chris" class="name-input" required>
+    </div>
 
-    <form id="ttForm">
-      <div class="form-row">
-        <label class="required">Card No.:</label>
-        <div class="grouped-inputs">
-          <input type="text" name="card_prefix" maxlength="5" placeholder="e.g. 40102" class="short-input" required>
-          <input type="text" name="card_number" maxlength="8" placeholder="Member number" class="long-input" required>
-        </div>
+    <div class="form-row">
+      <label class="required">Last Name:</label>
+      <input type="text" name="last_name" placeholder="e.g. Leung" class="name-input" required>
+    </div>
+
+    <div class="form-row">
+      <label class="required">Email:</label>
+      <div class="grouped-inputs">
+        <input type="text" name="email_prefix" placeholder="e.g. chris.leung" class="email-user" required> @
+        <input type="text" name="email_domain" placeholder="e.g. gmail" class="email-domain" required> .
+        <input type="text" name="email_tld" placeholder="com" class="email-tld" required>
       </div>
+    </div>
 
-      <div class="form-row">
-        <label class="required">First Name:</label>
-        <input type="text" name="first_name" placeholder="e.g. Chris" class="name-input" required>
+<div class="form-row">
+  <label class="required">Subscribe E-newsletter:</label>
+  <div class="grouped-inputs">
+    <label><input type="radio" name="subscribe_newsletter" value="yes" required> Yes</label>
+    <label><input type="radio" name="subscribe_newsletter" value="no" required> No</label>
+  </div>
+</div>
+
+    <div class="form-row">
+      <label class="required">Phone:</label>
+      <input type="text" name="phone" maxlength="10" placeholder="e.g. 999-999-9999" class="phone-input" required>
+    </div>
+
+    <div class="form-row">
+      <label class="required">Postal Code:</label>
+      <div class="grouped-inputs">
+        <input type="text" name="postal1" maxlength="3" placeholder="A9A" class="postal-input" required>
+        <input type="text" name="postal2" maxlength="3" placeholder="9A9" class="postal-input" required>
       </div>
+    </div>
 
-      <div class="form-row">
-        <label class="required">Last Name:</label>
-        <input type="text" name="last_name" placeholder="e.g. Leung" class="name-input" required>
+<div class="form-row">
+  <label class="required">Language:</label>
+  <div class="language-options">
+    <label><input type="radio" name="language" value="EN" required> English</label>
+    <label><input type="radio" name="language" value="TC" required> Traditional Chinese</label>
+    <label><input type="radio" name="language" value="SC" required> Simplified Chinese</label>
+    <label><input type="radio" name="language" value="FR" required> French</label>
+  </div>
+</div>
+
+    <div class="form-row">
+      <label>Date of Birth:</label>
+      <div class="grouped-inputs">
+        <input type="text" name="birth_month" maxlength="2" placeholder="MM" class="postal-input">
+        <input type="text" name="birth_year" maxlength="4" placeholder="YYYY" class="short-input">
       </div>
+    </div>
 
-      <div class="form-row">
-        <label class="required">Email:</label>
-        <div class="grouped-inputs">
-          <input type="text" name="email_prefix" placeholder="e.g. chris.leung" class="email-user" required> @
-          <input type="text" name="email_domain" placeholder="e.g. gmail" class="email-domain" required> .
-          <input type="text" name="email_tld" placeholder="com" class="email-tld" required>
-        </div>
+    <div class="form-row">
+      <label class="required">Form Submission Date:</label>
+      <div class="grouped-inputs">
+        <input type="text" name="sub_month" maxlength="2" placeholder="MM" class="postal-input" required>
+        <input type="text" name="sub_day" maxlength="2" placeholder="DD" class="postal-input" required>
+        <input type="text" name="sub_year" maxlength="4" placeholder="YYYY" class="short-input" required>
       </div>
+    </div>
 
-      <div class="form-row">
-        <label class="required">Subscribe E-newsletter:</label>
-        <div class="grouped-inputs">
-          <label><input type="radio" name="subscribe_newsletter" value="yes" required> Yes</label>
-          <label><input type="radio" name="subscribe_newsletter" value="no" required> No</label>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <label class="required">Phone:</label>
-        <input type="text" name="phone" maxlength="10" placeholder="e.g. 9999999999" class="phone-input" required>
-      </div>
-
-      <div class="form-row">
-        <label class="required">Postal Code:</label>
-        <div class="grouped-inputs">
-          <input type="text" name="postal1" maxlength="3" placeholder="A9A" class="postal-input" required>
-          <input type="text" name="postal2" maxlength="3" placeholder="9A9" class="postal-input" required>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <label class="required">Language:</label>
-        <div class="language-options">
-          <label><input type="radio" name="language" value="EN" required> English</label>
-          <label><input type="radio" name="language" value="TC" required> Traditional Chinese</label>
-          <label><input type="radio" name="language" value="SC" required> Simplified Chinese</label>
-          <label><input type="radio" name="language" value="FR" required> French</label>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <label>Date of Birth:</label>
-        <div class="grouped-inputs">
-          <input type="text" name="birth_month" maxlength="2" placeholder="MM" class="postal-input">
-          <input type="text" name="birth_year" maxlength="4" placeholder="YYYY" class="short-input">
-        </div>
-      </div>
-
-      <div class="form-row">
-        <label class="required">Form Submission Date:</label>
-        <div class="grouped-inputs">
-          <input type="text" name="sub_month" maxlength="2" placeholder="MM" class="postal-input" required>
-          <input type="text" name="sub_day" maxlength="2" placeholder="DD" class="postal-input" required>
-          <input type="text" name="sub_year" maxlength="4" placeholder="YYYY" class="short-input" required>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <label class="required">Application Form Completed:</label>
+    <div class="form-row">
+      <label class="required">Application Form Completed:</label>
+      <div>
         <label><input type="checkbox" name="customer_signed" required></label>
       </div>
-    </form>
-  </div>
+    </div>
+  </form>
+</div> <!-- Close .container -->
 
   <div class="image-box">
     <img src="application_form.jpg" alt="Application Form Example">
   </div>
+</div> <!-- Close .layout-container -->
 </div>
 
 <script>
   function validateForm() {
     const form = document.forms['ttForm'];
-    const requiredFields = [
-      'card_prefix', 'card_number', 'first_name', 'last_name',
-      'email_prefix', 'email_domain', 'email_tld',
-      'phone', 'postal1', 'postal2',
-      'sub_month', 'sub_day', 'sub_year'
-    ];
+    const requiredFields = ['card_prefix', 'card_number', 'first_name', 'last_name', 'email_prefix', 'email_domain', 'email_tld', 'phone', 'postal1', 'postal2', 'sub_month', 'sub_day', 'sub_year'];
 
     for (let field of requiredFields) {
       if (!form[field].value.trim()) {
@@ -241,35 +244,35 @@
       return;
     }
 
-    // Date of Birth
-    if (form['birth_month'].value) {
-      const mm = parseInt(form['birth_month'].value, 10);
-      if (isNaN(mm) || mm < 1 || mm > 12) {
-        alert("Birth month must be between 1 and 12");
-        return;
-      }
-    }
-    if (form['birth_year'].value) {
-      const yyyy = parseInt(form['birth_year'].value, 10);
-      if (isNaN(yyyy) || yyyy > 2100 || yyyy < 1900) {
-        alert("Birth year must be between 1900 and 2100");
-        return;
-      }
-    }
+// Date of Birth
+if (form['birth_month'].value) {
+  const mm = parseInt(form['birth_month'].value, 10);
+  if (isNaN(mm) || mm < 1 || mm > 12) {
+    alert("Birth month must be between 1 and 12");
+    return;
+  }
+}
+if (form['birth_year'].value) {
+  const yyyy = parseInt(form['birth_year'].value, 10);
+  if (isNaN(yyyy) || yyyy > 2100 || yyyy < 1900) {
+    alert("Birth year must be between 1900 and 2100");
+    return;
+  }
+}
 
-    // Form Submission Date
-    const sub_mm = parseInt(form['sub_month'].value, 10);
-    const sub_dd = parseInt(form['sub_day'].value, 10);
-    const sub_yyyy = parseInt(form['sub_year'].value, 10);
+// Form Submission Date
+const sub_mm = parseInt(form['sub_month'].value, 10);
+const sub_dd = parseInt(form['sub_day'].value, 10);
+const sub_yyyy = parseInt(form['sub_year'].value, 10);
 
-    if (
-      isNaN(sub_mm) || sub_mm < 1 || sub_mm > 12 ||
-      isNaN(sub_dd) || sub_dd < 1 || sub_dd > 31 ||
-      isNaN(sub_yyyy) || sub_yyyy > 2100 || sub_yyyy < 1900
-    ) {
-      alert("Form submission date is invalid. Please check MM, DD, and YYYY fields.");
-      return;
-    }
+if (
+  isNaN(sub_mm) || sub_mm < 1 || sub_mm > 12 ||
+  isNaN(sub_dd) || sub_dd < 1 || sub_dd > 31 ||
+  isNaN(sub_yyyy) || sub_yyyy > 2100 || sub_yyyy < 1900
+) {
+  alert("Form submission date is invalid. Please check MM, DD, and YYYY fields.");
+  return;
+}
 
     alert("Record Saved");
   }
@@ -279,6 +282,7 @@
       alert("Account Deleted");
     }
   }
+
 </script>
 
 </body>
