@@ -286,14 +286,6 @@ if (
     }
   }
 
-  function enforceSingleCheckbox(clickedCheckbox) {
-    const checkboxes = document.querySelectorAll('input[name="language"]');
-    checkboxes.forEach(checkbox => {
-      if (checkbox !== clickedCheckbox) {
-        checkbox.checked = false;
-      }
-    });
-  }
 </script>
 
 </body>
