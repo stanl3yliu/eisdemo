@@ -9,26 +9,47 @@
       margin: 40px;
       background-color: #f9f9f9;
     }
+
+    .layout-container {
+      display: flex;
+      align-items: flex-start;
+      gap: 40px;
+    }
+
     .container {
       background: #fff;
       padding: 20px;
       border: 1px solid #ccc;
+      flex: 2;
       max-width: 700px;
       position: relative;
     }
-    h2 {
-      margin-bottom: 20px;
+
+    .image-box {
+      flex: 1;
     }
+
+    .image-box img {
+      max-width: 100%;
+      max-height: 615px;
+      height: auto;
+      display: block;
+      border: 1px solid #ccc;
+    }
+
     .form-row {
       margin-bottom: 15px;
-      display: grid;
-      grid-template-columns: 160px 1fr;
-      align-items: center;
-      gap: 5px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      gap: 10px;
     }
-    label {
-      font-weight: normal;
+
+    .form-row label {
+      width: 160px;
+      flex-shrink: 0;
     }
+
     input[type="text"], select {
       padding: 5px;
     }
@@ -37,24 +58,31 @@
     .long-input {
       width: 20ch;
     }
+
     .name-input {
       width: 30ch;
     }
+
     .phone-input {
       width: 20ch;
     }
+
     .postal-input {
       width: 6ch;
     }
+
     .short-input {
       width: 10ch;
     }
+
     .email-user {
       width: 18ch;
     }
+
     .email-domain {
       width: 10ch;
     }
+
     .email-tld {
       width: 5ch;
     }
@@ -63,12 +91,13 @@
       display: flex;
       gap: 5px;
       align-items: center;
+      flex-wrap: wrap;
     }
 
     .language-options {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 5px 5px;
+      gap: 2px 5px;
     }
 
     .top-buttons {
@@ -76,6 +105,7 @@
       top: 20px;
       right: 20px;
     }
+
     .top-buttons button {
       padding: 6px 16px;
       margin-left: 10px;
@@ -87,138 +117,117 @@
       margin-left: 4px;
     }
 
-.layout-container {
-  display: flex;
-  align-items: flex-start;
-  gap: 40px;
+.language-options label {
+  white-space: nowrap;
 }
 
-.container {
-  flex: 2; /* Make the form larger */
-}
-
-.image-box {
-  flex: 1; /* Make the image column smaller */
-}
-
-.image-box img {
-  max-width: 100%;
-  max-height: 615px; /* 👈 Adjust as needed */	
-  height: auto;
-  display: block;
-  border: 1px solid #ccc;
-}
   </style>
 </head>
 <body>
 
 <div class="layout-container">
   <div class="container">
-  <div class="top-buttons">
-    <button type="button" onclick="validateForm()">Save</button>
-    <button type="button" onclick="confirmDelete()">Delete</button>
-  </div>
+    <div class="top-buttons">
+      <button type="button" onclick="validateForm()">Save</button>
+      <button type="button" onclick="confirmDelete()">Delete</button>
+    </div>
 
-  <h2>T&T Rewards Card Maintenance (Canada)</h2>
+    <h2>T&T Rewards Card Maintenance (Canada)</h2>
 
-  <form id="ttForm">
-    <div class="form-row">
-      <label class="required">Card No.:</label>
-      <div class="grouped-inputs">
-        <input type="text" name="card_prefix" maxlength="5" placeholder="e.g. 40102" class="short-input" required>
-        <input type="text" name="card_number" maxlength="8" placeholder="Member number" class="long-input" required>
+    <form id="ttForm">
+      <div class="form-row">
+        <label class="required">Card No.:</label>
+        <div class="grouped-inputs">
+          <input type="text" name="card_prefix" maxlength="5" placeholder="e.g. 40102" class="short-input" required>
+          <input type="text" name="card_number" maxlength="8" placeholder="Member number" class="long-input" required>
+        </div>
       </div>
-    </div>
 
-    <div class="form-row">
-      <label class="required">First Name:</label>
-      <input type="text" name="first_name" placeholder="e.g. Chris" class="name-input" required>
-    </div>
-
-    <div class="form-row">
-      <label class="required">Last Name:</label>
-      <input type="text" name="last_name" placeholder="e.g. Leung" class="name-input" required>
-    </div>
-
-    <div class="form-row">
-      <label class="required">Email:</label>
-      <div class="grouped-inputs">
-        <input type="text" name="email_prefix" placeholder="e.g. chris.leung" class="email-user" required> @
-        <input type="text" name="email_domain" placeholder="e.g. gmail" class="email-domain" required> .
-        <input type="text" name="email_tld" placeholder="com" class="email-tld" required>
+      <div class="form-row">
+        <label class="required">First Name:</label>
+        <input type="text" name="first_name" placeholder="e.g. Chris" class="name-input" required>
       </div>
-    </div>
 
-<div class="form-row">
-  <label>Subscribe E-newsletter:</label>
-  <div class="grouped-inputs">
-    <label><input type="checkbox" name="subscribe_newsletter" value="yes" onclick="enforceSingleCheckbox(this, 'subscribe_newsletter')"> Yes</label>
-    <label><input type="checkbox" name="subscribe_newsletter" value="no" onclick="enforceSingleCheckbox(this, 'subscribe_newsletter')"> No</label>
-  </div>
-</div>
-
-    <div class="form-row">
-      <label class="required">Phone:</label>
-      <input type="text" name="phone" maxlength="10" placeholder="e.g. 9999999999" class="phone-input" required>
-    </div>
-
-    <div class="form-row">
-      <label>Postal Code:</label>
-      <div class="grouped-inputs">
-        <input type="text" name="postal1" maxlength="3" placeholder="A9A" class="postal-input">
-        <input type="text" name="postal2" maxlength="3" placeholder="9A9" class="postal-input">
+      <div class="form-row">
+        <label class="required">Last Name:</label>
+        <input type="text" name="last_name" placeholder="e.g. Leung" class="name-input" required>
       </div>
-    </div>
 
-<div class="form-row">
-  <label>Language:</label>
-  <div class="language-options">
-    <label><input type="checkbox" name="language" value="EN" onclick="enforceSingleCheckbox(this, 'language')"> English</label>
-    <label><input type="checkbox" name="language" value="TC" onclick="enforceSingleCheckbox(this, 'language')"> Traditional Chinese</label>
-    <label><input type="checkbox" name="language" value="SC" onclick="enforceSingleCheckbox(this, 'language')"> Simplified Chinese</label>
-    <label><input type="checkbox" name="language" value="FR" onclick="enforceSingleCheckbox(this, 'language')"> French</label>
-  </div>
-</div>
-
-    <div class="form-row">
-      <label>Date of Birth:</label>
-      <div class="grouped-inputs">
-        <input type="text" name="birth_month" maxlength="2" placeholder="MM" class="postal-input">
-        <input type="text" name="birth_year" maxlength="4" placeholder="YYYY" class="short-input">
+      <div class="form-row">
+        <label class="required">Email:</label>
+        <div class="grouped-inputs">
+          <input type="text" name="email_prefix" placeholder="e.g. chris.leung" class="email-user" required> @
+          <input type="text" name="email_domain" placeholder="e.g. gmail" class="email-domain" required> .
+          <input type="text" name="email_tld" placeholder="com" class="email-tld" required>
+        </div>
       </div>
-    </div>
 
-    <div class="form-row">
-      <label class="required">Form Submission Date:</label>
-      <div class="grouped-inputs">
-        <input type="text" name="sub_month" maxlength="2" placeholder="MM" class="postal-input" required>
-        <input type="text" name="sub_day" maxlength="2" placeholder="DD" class="postal-input" required>
-        <input type="text" name="sub_year" maxlength="4" placeholder="YYYY" class="short-input" required>
+      <div class="form-row">
+        <label>Subscribe E-newsletter:</label>
+        <div class="grouped-inputs">
+          <label><input type="checkbox" name="subscribe_newsletter" value="yes" onclick="enforceSingleCheckbox(this, 'subscribe_newsletter')"> Yes</label>
+          <label><input type="checkbox" name="subscribe_newsletter" value="no" onclick="enforceSingleCheckbox(this, 'subscribe_newsletter')"> No</label>
+        </div>
       </div>
-    </div>
 
-    <div class="form-row">
-      <label class="required">Application Form Completed:</label>
-      <div>
+      <div class="form-row">
+        <label class="required">Phone:</label>
+        <input type="text" name="phone" maxlength="10" placeholder="e.g. 9999999999" class="phone-input" required>
+      </div>
+
+      <div class="form-row">
+        <label>Postal Code:</label>
+        <div class="grouped-inputs">
+          <input type="text" name="postal1" maxlength="3" placeholder="A9A" class="postal-input">
+          <input type="text" name="postal2" maxlength="3" placeholder="9A9" class="postal-input">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label>Language:</label>
+        <div class="language-options">
+          <label><input type="checkbox" name="language" value="EN" onclick="enforceSingleCheckbox(this, 'language')"> English</label>
+          <label><input type="checkbox" name="language" value="TC" onclick="enforceSingleCheckbox(this, 'language')"> Traditional Chinese</label>
+          <label><input type="checkbox" name="language" value="SC" onclick="enforceSingleCheckbox(this, 'language')"> Simplified Chinese</label>
+          <label><input type="checkbox" name="language" value="FR" onclick="enforceSingleCheckbox(this, 'language')"> French</label>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label>Date of Birth:</label>
+        <div class="grouped-inputs">
+          <input type="text" name="birth_month" maxlength="2" placeholder="MM" class="postal-input">
+          <input type="text" name="birth_year" maxlength="4" placeholder="YYYY" class="short-input">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label class="required">Form Submission Date:</label>
+        <div class="grouped-inputs">
+          <input type="text" name="sub_month" maxlength="2" placeholder="MM" class="postal-input" required>
+          <input type="text" name="sub_day" maxlength="2" placeholder="DD" class="postal-input" required>
+          <input type="text" name="sub_year" maxlength="4" placeholder="YYYY" class="short-input" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label class="required">Application Form Completed:</label>
         <label><input type="checkbox" name="customer_signed" required></label>
       </div>
-    </div>
-  </form>
-</div> <!-- Close .container -->
+    </form>
+  </div>
 
   <div class="image-box">
     <img src="application_form.jpg" alt="Application Form Example">
   </div>
-</div> <!-- Close .layout-container -->
 </div>
 
 <script>
   function validateForm() {
-    console.log("Validation started"); // Debug
+    console.log("Validation started");
 
     const form = document.forms['ttForm'];
 
-    // Required fields (content must not be empty)
     const requiredFields = [
       'card_prefix', 'card_number',
       'first_name', 'last_name',
@@ -234,32 +243,26 @@
       }
     }
 
-    // Required checkbox: Application Form Completed
     if (!form['customer_signed'].checked) {
       alert("Missing Mandatory Information");
       return;
     }
 
-    // Card Number Format
-    const cardPrefix = form['card_prefix'].value.trim();
-    const cardNumber = form['card_number'].value.trim();
-    if (!/^\d{5}$/.test(cardPrefix)) {
+    if (!/^\d{5}$/.test(form['card_prefix'].value.trim())) {
       alert("Card prefix must be exactly 5 digits");
       return;
     }
-    if (!/^\d{8}$/.test(cardNumber)) {
+
+    if (!/^\d{8}$/.test(form['card_number'].value.trim())) {
       alert("Card number must be exactly 8 digits");
       return;
     }
 
-    // Phone Number Format
-    const phone = form['phone'].value.trim();
-    if (!/^\d{10}$/.test(phone)) {
+    if (!/^\d{10}$/.test(form['phone'].value.trim())) {
       alert("Phone number must be exactly 10 digits");
       return;
     }
 
-    // Optional Postal Code – validate if filled
     const postal1 = form['postal1'].value.trim();
     const postal2 = form['postal2'].value.trim();
     if ((postal1 || postal2) &&
@@ -268,7 +271,6 @@
       return;
     }
 
-    // Optional Date of Birth
     const dobMonth = form['birth_month'].value.trim();
     const dobYear = form['birth_year'].value.trim();
     if (dobMonth && (!/^\d{1,2}$/.test(dobMonth) || parseInt(dobMonth) < 1 || parseInt(dobMonth) > 12)) {
@@ -280,14 +282,14 @@
       return;
     }
 
-    // Submission Date (Mandatory)
-    const subMonth = parseInt(form['sub_month'].value.trim(), 10);
-    const subDay = parseInt(form['sub_day'].value.trim(), 10);
-    const subYear = parseInt(form['sub_year'].value.trim(), 10);
+    const sub_mm = parseInt(form['sub_month'].value.trim(), 10);
+    const sub_dd = parseInt(form['sub_day'].value.trim(), 10);
+    const sub_yyyy = parseInt(form['sub_year'].value.trim(), 10);
+
     if (
-      isNaN(subMonth) || subMonth < 1 || subMonth > 12 ||
-      isNaN(subDay) || subDay < 1 || subDay > 31 ||
-      isNaN(subYear) || subYear < 1900 || subYear > 2100
+      isNaN(sub_mm) || sub_mm < 1 || sub_mm > 12 ||
+      isNaN(sub_dd) || sub_dd < 1 || sub_dd > 31 ||
+      isNaN(sub_yyyy) || sub_yyyy > 2100 || sub_yyyy < 1900
     ) {
       alert("Form submission date is invalid. Please check MM, DD, and YYYY.");
       return;
@@ -309,7 +311,6 @@
     });
   }
 </script>
-
 
 </body>
 </html>
