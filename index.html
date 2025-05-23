@@ -163,7 +163,7 @@
     </div>
 
     <div class="form-row">
-      <label>Postal Code:</label>
+      <label class="required">Postal Code:</label>
       <div class="grouped-inputs">
         <input type="text" name="postal1" maxlength="3" placeholder="A9A" class="postal-input">
         <input type="text" name="postal2" maxlength="3" placeholder="9A9" class="postal-input">
@@ -214,8 +214,18 @@
 
 <script>
   function validateForm() {
+    console.log("Validation started"); // Debug
+
     const form = document.forms['ttForm'];
-    const requiredFields = ['card_prefix', 'card_number', 'first_name', 'last_name', 'email_prefix', 'email_domain', 'email_tld', 'phone', 'postal1', 'postal2', 'sub_month', 'sub_day', 'sub_year'];
+
+    // Required fields (content must not be empty)
+    const requiredFields = [
+      'card_prefix', 'card_number',
+      'first_name', 'last_name',
+      'email_prefix', 'email_domain', 'email_tld',
+      'phone',
+      'sub_month', 'sub_day', 'sub_year'
+    ];
 
     for (let field of requiredFields) {
       if (!form[field].value.trim()) {
@@ -224,58 +234,64 @@
       }
     }
 
+    // Required checkbox: Application Form Completed
     if (!form['customer_signed'].checked) {
       alert("Missing Mandatory Information");
       return;
     }
 
-    if (!/^\d{5}$/.test(form['card_prefix'].value) || !/^\d{8}$/.test(form['card_number'].value)) {
-      alert("Card number format is incorrect");
+    // Card Number Format
+    const cardPrefix = form['card_prefix'].value.trim();
+    const cardNumber = form['card_number'].value.trim();
+    if (!/^\d{5}$/.test(cardPrefix)) {
+      alert("Card prefix must be exactly 5 digits");
+      return;
+    }
+    if (!/^\d{8}$/.test(cardNumber)) {
+      alert("Card number must be exactly 8 digits");
       return;
     }
 
-    if (!/^\d{10}$/.test(form['phone'].value)) {
-      alert("Phone number must be 10 digits");
+    // Phone Number Format
+    const phone = form['phone'].value.trim();
+    if (!/^\d{10}$/.test(phone)) {
+      alert("Phone number must be exactly 10 digits");
       return;
     }
 
-    if (const postal1 = form['postal1'].value.trim();
-const postal2 = form['postal2'].value.trim();
-if ((postal1 || postal2) && (!/^[A-Za-z]\d[A-Za-z]$/.test(postal1) || !/^\d[A-Za-z]\d$/.test(postal2))) {
-  alert("Postal code format is invalid");
-  return;
-}
+    // Optional Postal Code – validate if filled
+    const postal1 = form['postal1'].value.trim();
+    const postal2 = form['postal2'].value.trim();
+    if ((postal1 || postal2) &&
+        (!/^[A-Za-z]\d[A-Za-z]$/.test(postal1) || !/^\d[A-Za-z]\d$/.test(postal2))) {
+      alert("Postal code format is invalid (e.g., A9A 9A9)");
+      return;
     }
 
-// Date of Birth
-if (form['birth_month'].value) {
-  const mm = parseInt(form['birth_month'].value, 10);
-  if (isNaN(mm) || mm < 1 || mm > 12) {
-    alert("Birth month must be between 1 and 12");
-    return;
-  }
-}
-if (form['birth_year'].value) {
-  const yyyy = parseInt(form['birth_year'].value, 10);
-  if (isNaN(yyyy) || yyyy > 2100 || yyyy < 1900) {
-    alert("Birth year must be between 1900 and 2100");
-    return;
-  }
-}
+    // Optional Date of Birth
+    const dobMonth = form['birth_month'].value.trim();
+    const dobYear = form['birth_year'].value.trim();
+    if (dobMonth && (!/^\d{1,2}$/.test(dobMonth) || parseInt(dobMonth) < 1 || parseInt(dobMonth) > 12)) {
+      alert("Birth month must be between 1 and 12");
+      return;
+    }
+    if (dobYear && (!/^\d{4}$/.test(dobYear) || parseInt(dobYear) > 2100 || parseInt(dobYear) < 1900)) {
+      alert("Birth year must be between 1900 and 2100");
+      return;
+    }
 
-// Form Submission Date
-const sub_mm = parseInt(form['sub_month'].value, 10);
-const sub_dd = parseInt(form['sub_day'].value, 10);
-const sub_yyyy = parseInt(form['sub_year'].value, 10);
-
-if (
-  isNaN(sub_mm) || sub_mm < 1 || sub_mm > 12 ||
-  isNaN(sub_dd) || sub_dd < 1 || sub_dd > 31 ||
-  isNaN(sub_yyyy) || sub_yyyy > 2100 || sub_yyyy < 1900
-) {
-  alert("Form submission date is invalid. Please check MM, DD, and YYYY fields.");
-  return;
-}
+    // Submission Date (Mandatory)
+    const subMonth = parseInt(form['sub_month'].value.trim(), 10);
+    const subDay = parseInt(form['sub_day'].value.trim(), 10);
+    const subYear = parseInt(form['sub_year'].value.trim(), 10);
+    if (
+      isNaN(subMonth) || subMonth < 1 || subMonth > 12 ||
+      isNaN(subDay) || subDay < 1 || subDay > 31 ||
+      isNaN(subYear) || subYear < 1900 || subYear > 2100
+    ) {
+      alert("Form submission date is invalid. Please check MM, DD, and YYYY.");
+      return;
+    }
 
     alert("Record Saved");
   }
@@ -286,14 +302,14 @@ if (
     }
   }
 
-function enforceSingleCheckbox(clicked, groupName) {
-  const group = document.querySelectorAll(`input[type="checkbox"][name="${groupName}"]`);
-  group.forEach(box => {
-    if (box !== clicked) box.checked = false;
-  });
-}
-  
+  function enforceSingleCheckbox(clicked, groupName) {
+    const group = document.querySelectorAll(`input[type="checkbox"][name="${groupName}"]`);
+    group.forEach(box => {
+      if (box !== clicked) box.checked = false;
+    });
+  }
 </script>
+
 
 </body>
 </html>
