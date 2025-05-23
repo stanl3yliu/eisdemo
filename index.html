@@ -165,8 +165,8 @@
     <div class="form-row">
       <label class="required">Postal Code:</label>
       <div class="grouped-inputs">
-        <input type="text" name="postal1" maxlength="3" placeholder="A9A" class="postal-input" required>
-        <input type="text" name="postal2" maxlength="3" placeholder="9A9" class="postal-input" required>
+        <input type="text" name="postal1" maxlength="3" placeholder="A9A" class="postal-input">
+        <input type="text" name="postal2" maxlength="3" placeholder="9A9" class="postal-input">
       </div>
     </div>
 
@@ -239,9 +239,12 @@
       return;
     }
 
-    if (!/^[A-Za-z]\d[A-Za-z]$/.test(form['postal1'].value) || !/^\d[A-Za-z]\d$/.test(form['postal2'].value)) {
-      alert("Postal code format is invalid");
-      return;
+    if (const postal1 = form['postal1'].value.trim();
+const postal2 = form['postal2'].value.trim();
+if ((postal1 || postal2) && (!/^[A-Za-z]\d[A-Za-z]$/.test(postal1) || !/^\d[A-Za-z]\d$/.test(postal2))) {
+  alert("Postal code format is invalid");
+  return;
+}
     }
 
 // Date of Birth
